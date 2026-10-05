@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#10221d">
+  <meta name="theme-color" content="#151a20">
   <title>QR Platba</title>
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./style.css">
@@ -21,10 +21,10 @@
   </div>
   <div class="app-shell">
     <aside class="sidebar">
-      <div class="brand"><img src="./icon.svg" alt="" width="38" height="38"><div><strong>QR Platba</strong><span>Offline generátor plateb</span></div></div>
+      <div class="brand"><img src="./icon.svg" alt="" width="38" height="38"><div><strong>QR Platba</strong><span>Generátor českých plateb</span></div></div>
       <div class="sidebar-title"><span>Moje účty</span><button id="addProfile" class="icon-button" title="Přidat profil" aria-label="Přidat profil">+</button></div>
       <div id="profiles" class="profiles"></div>
-      <div class="sidebar-bottom"><span class="online-dot"></span> Data zůstávají na tomto zařízení</div>
+      <div class="sidebar-bottom"><span class="online-dot"></span> Profily zůstávají v tomto prohlížeči</div>
     </aside>
     <main class="main">
       <header class="topbar"><div><p class="eyebrow">ČESKÁ QR PLATBA · SPAYD</p><h1>Nová platba</h1><p class="subhead">Vyplňte údaje a QR kód se okamžitě připraví ke sdílení.</p></div><button id="newPayment" class="text-button" title="Nová platba (⌘N)">↻ <span>Nová platba</span></button></header>
@@ -49,7 +49,7 @@
           <details class="spayd-details"><summary>Zobrazit SPAYD řetězec</summary><code id="spaydText">—</code></details>
         </section>
       </div>
-      <footer>QR Platba používá formát SPAYD 1.0. Údaje se neodesílají mimo váš lokální server.</footer>
+      <footer>QR Platba používá formát SPAYD 1.0. Údaje platby se odešlou serveru pro vytvoření QR a server je neukládá.</footer>
     </main>
   </div>
   <dialog id="profileDialog"><form id="profileForm" novalidate><div class="dialog-head"><div><p class="eyebrow">ULOŽENÝ ÚČET</p><h2 id="dialogTitle">Nový profil</h2></div><button type="button" id="closeDialog" class="icon-button" aria-label="Zavřít">×</button></div><label for="profileName">Název profilu</label><input id="profileName" maxlength="60" required placeholder="Např. Air Bank – firma"><label for="profileAccount">Český účet nebo IBAN</label><input id="profileAccount" required autocomplete="off" spellcheck="false" placeholder="1234567890/3030 nebo CZ…"><div id="profileError" class="form-error" role="alert"></div><div class="dialog-actions"><button type="button" id="cancelDialog">Zrušit</button><button type="submit" class="primary">Uložit profil</button></div></form></dialog>

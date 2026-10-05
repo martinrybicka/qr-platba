@@ -11,9 +11,9 @@ docker run --rm -p 8080:8080 qr-platba
 
 Alternativně spusťte `docker compose up --build -d`.
 
-Na počítači s Dockerem otevřete [http://localhost:8080](http://localhost:8080), z jiného zařízení v místní síti `http://IP_POČÍTAČE:8080/`. Port 8080 je publikován na všech síťových rozhraních hostitele; přístup se řídí také firewallem počítače. Aplikace nevolá žádné cloudové služby. Během sestavení se stáhne připnutá závislost `qrcode[pil]`; běžící kontejner už síť nepotřebuje.
+Na počítači s Dockerem otevřete [http://localhost:8080](http://localhost:8080), z jiného zařízení v místní síti `http://IP_POČÍTAČE:8080/`. Port 8080 je publikován na všech síťových rozhraních hostitele; přístup se řídí také firewallem počítače. Místní nasazení nepotřebuje cloudové služby. Během sestavení se stáhne připnutá závislost `qrcode[pil]`; běžící kontejner už síť nepotřebuje.
 
-Profily se ukládají do `localStorage` konkrétního prohlížeče a jeho originu. Přežijí restart aplikace i kontejneru; při vymazání dat webu se smažou. Server žádné platební údaje neukládá.
+Profily se ukládají do `localStorage` konkrétního prohlížeče a jeho originu. Přežijí restart aplikace i kontejneru; při vymazání dat webu se smažou. Údaje platby se při generování QR odesílají na server a server je neukládá. Při veřejném nasazení procházejí zvolenou reverzní proxy nebo tunelem.
 
 **Neotvírejte `static/index.html` přímo z disku.** Adresa `file://` nemá přístup k místnímu API. Aplikaci vždy otevřete přes `http://127.0.0.1:8080/` po spuštění serveru.
 
