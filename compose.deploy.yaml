@@ -1,0 +1,6 @@
+services:
+  qr-platba:
+    image: ghcr.io/martinrybicka/qr-platba:latest
+    ports:
+      - "${QR_PLATBA_PORT:-8080}:8080"
+    restart: unless-stopped

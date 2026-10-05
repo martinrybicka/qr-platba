@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10221d">
+  <title>QR Platba</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div id="launchNotice" class="launch-notice" role="main">
+    <div class="launch-card">
+      <img src="./icon.svg" alt="" width="58" height="58">
+      <p class="eyebrow">QR PLATBA</p>
+      <h1>Aplikaci je potřeba spustit</h1>
+      <p>Otevřeli jste soubor HTML přímo z disku. Generování QR používá místní server, proto tato adresa <code>file://</code> nefunguje.</p>
+      <ol><li>Ve složce projektu spusťte <strong>Spustit QR Platba.command</strong> nebo <code>docker compose up --build -d</code>.</li><li>Poté otevřete <a href="http://127.0.0.1:8080/">http://127.0.0.1:8080/</a>.</li></ol>
+    </div>
+  </div>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><img src="./icon.svg" alt="" width="38" height="38"><div><strong>QR Platba</strong><span>Offline generátor plateb</span></div></div>
+      <div class="sidebar-title"><span>Moje účty</span><button id="addProfile" class="icon-button" title="Přidat profil" aria-label="Přidat profil">+</button></div>
+      <div id="profiles" class="profiles"></div>
+      <div class="sidebar-bottom"><span class="online-dot"></span> Data zůstávají na tomto zařízení</div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div><p class="eyebrow">ČESKÁ QR PLATBA · SPAYD</p><h1>Nová platba</h1><p class="subhead">Vyplňte údaje a QR kód se okamžitě připraví ke sdílení.</p></div><button id="newPayment" class="text-button" title="Nová platba (⌘N)">↻ <span>Nová platba</span></button></header>
+      <div class="content-grid">
+        <section class="card form-card" aria-labelledby="paymentTitle"><div class="section-head"><span class="step">01</span><div><h2 id="paymentTitle">Údaje platby</h2><p>Účet příjemce a částka</p></div></div>
+          <form id="paymentForm" novalidate>
+            <label for="account">Účet příjemce</label>
+            <select id="account" aria-describedby="accountHint"><option value="">Vyberte uložený profil</option></select>
+            <div id="accountHint" class="field-hint">Profily můžete přidat vlevo. Český účet převedeme na IBAN.</div>
+            <div class="field-row"><div><label for="amount">Částka</label><div class="input-suffix"><input id="amount" inputmode="decimal" autocomplete="off" placeholder="1 250,00" aria-describedby="amountHint"><span>Kč</span></div><div id="amountHint" class="field-hint">Maximálně dvě desetinná místa</div></div><div><label for="currency">Měna</label><select id="currency"><option value="CZK">CZK – česká koruna</option></select></div></div>
+            <div class="divider"></div>
+            <div class="section-mini">VOLITELNÉ ÚDAJE</div>
+            <label for="vs">Variabilní symbol</label><input id="vs" inputmode="numeric" maxlength="10" autocomplete="off" placeholder="Např. 202600123"><div class="field-hint">Pouze číslice, nejvýše 10 znaků</div>
+            <label for="message">Zpráva pro příjemce</label><input id="message" maxlength="100" autocomplete="off" placeholder="Např. Platba za fakturu"><div class="field-hint">V QR kódu bude bez diakritiky, nejvýše 60 znaků</div>
+          </form>
+        </section>
+        <section class="card preview-card" aria-labelledby="previewTitle"><div class="section-head"><span class="step">02</span><div><h2 id="previewTitle">Náhled QR platby</h2><p>Vždy aktuální podle formuláře</p></div></div>
+          <div id="qrArea" class="qr-area"><div id="qrPlaceholder" class="qr-placeholder"><div class="placeholder-icon">▦</div><strong>QR kód se objeví zde</strong><span>Vyberte účet a zadejte částku.</span></div><img id="qrImage" alt="QR kód pro platbu" hidden></div>
+          <div id="status" class="status" role="status" aria-live="polite">Připraveno k vyplnění</div>
+          <div id="ibanDisplay" class="iban-display" hidden><span>IBAN příjemce</span><strong id="ibanText"></strong></div>
+          <div class="actions"><button id="copyQr" class="primary" disabled>Kopírovat QR</button><button id="savePng" disabled>Uložit PNG</button><button id="copySpayd" disabled>Kopírovat SPAYD</button><button id="share" hidden disabled>Sdílet</button></div>
+          <details class="spayd-details"><summary>Zobrazit SPAYD řetězec</summary><code id="spaydText">—</code></details>
+        </section>
+      </div>
+      <footer>QR Platba používá formát SPAYD 1.0. Údaje se neodesílají mimo váš lokální server.</footer>
+    </main>
+  </div>
+  <dialog id="profileDialog"><form id="profileForm" novalidate><div class="dialog-head"><div><p class="eyebrow">ULOŽENÝ ÚČET</p><h2 id="dialogTitle">Nový profil</h2></div><button type="button" id="closeDialog" class="icon-button" aria-label="Zavřít">×</button></div><label for="profileName">Název profilu</label><input id="profileName" maxlength="60" required placeholder="Např. Air Bank – firma"><label for="profileAccount">Český účet nebo IBAN</label><input id="profileAccount" required autocomplete="off" spellcheck="false" placeholder="1234567890/3030 nebo CZ…"><div id="profileError" class="form-error" role="alert"></div><div class="dialog-actions"><button type="button" id="cancelDialog">Zrušit</button><button type="submit" class="primary">Uložit profil</button></div></form></dialog>
+</body>
+</html>
