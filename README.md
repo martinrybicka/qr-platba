@@ -38,14 +38,13 @@ Na serveru stáhněte `compose.deploy.yaml` a spusťte:
 docker compose -f compose.deploy.yaml up -d
 ```
 
-Poté otevřete `http://IP_SERVERU:8080/`. Novou verzi nasadíte pomocí `docker compose -f compose.deploy.yaml pull && docker compose -f compose.deploy.yaml up -d`. Nově vytvořený obraz v GHCR je obvykle soukromý; pro stahování z jiného serveru nastavte balíček jako veřejný, nebo se na serveru přihlaste do `ghcr.io` účtem s oprávněním `read:packages`. Pro veřejný internet použijte vlastní reverzní proxy s HTTPS.
+Poté otevřete `http://IP_SERVERU:8080/`. Novou verzi nasadíte pomocí `docker compose -f compose.deploy.yaml pull && docker compose -f compose.deploy.yaml up -d`. Balíček `ghcr.io/martinrybicka/qr-platba` je veřejný a lze jej stáhnout bez přihlášení. Pro veřejný internet použijte vlastní reverzní proxy s HTTPS.
 
 ### Portainer (Docker Standalone)
 
-1. Po úspěšném zveřejnění obrazu nastavte balíček v GitHub Packages na **Public**. Viditelnost repozitáře a kontejnerového balíčku jsou samostatná nastavení.
-2. V Portaineru otevřete **Stacks → Add stack → Git repository**. Zadejte URL `https://github.com/martinrybicka/qr-platba`, větev `main` a cestu `compose.deploy.yaml`.
-3. Volitelně nastavte proměnnou stacku `QR_PLATBA_PORT` (výchozí `8080`). Pak klikněte na **Deploy the stack**.
-4. Pro další vydání v Portaineru zapněte GitOps aktualizace a volbu opětovného stažení obrazu. Po dokončení GitHub Actions lze stack také ručně aktualizovat s volbou znovu stáhnout image.
+1. V Portaineru otevřete **Stacks → Add stack → Git repository**. Zadejte URL `https://github.com/martinrybicka/qr-platba`, větev `main` a cestu `compose.deploy.yaml`.
+2. Volitelně nastavte proměnnou stacku `QR_PLATBA_PORT` (výchozí `8080`). Pak klikněte na **Deploy the stack**.
+3. Pro další vydání v Portaineru zapněte GitOps aktualizace a volbu opětovného stažení obrazu. Po dokončení GitHub Actions lze stack také ručně aktualizovat s volbou znovu stáhnout image.
 
 Portainer používá hotový image z GHCR. GitHub Actions jej sestaví při pushi do `main`; samotný Portainer nepotřebuje zdrojový kód pro sestavení.
 
